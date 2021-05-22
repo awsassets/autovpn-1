@@ -1,9 +1,9 @@
 package autovpn
 
 import (
-	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"time"
 
 	"github.com/mysteriumnetwork/go-openvpn/openvpn3"
 )
@@ -14,7 +14,7 @@ func (c *Config) Start() error {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(files)
+	rand.Seed(time.Now().UnixNano())
 	bytes, err := ioutil.ReadFile(files[rand.Intn(len(files))])
 	if err != nil {
 		return err

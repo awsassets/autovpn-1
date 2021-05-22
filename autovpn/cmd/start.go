@@ -7,7 +7,6 @@ import (
 	"os"
 	"strings"
 
-	homedir "github.com/mitchellh/go-homedir"
 	"github.com/rogercoll/autovpn"
 	"github.com/spf13/cobra"
 )
@@ -31,9 +30,8 @@ var startCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(startCmd)
-	home, _ := homedir.Dir()
-	startCmd.PersistentFlags().StringP("creds", "c", home+"/.autovpn/openvpn.creds", "Openvpn credentials file (default is $HOME/.autovpn/openvpn.creds)")
-	startCmd.PersistentFlags().StringP("vpns", "v", home+"/.autovpn/confs", "Openvpn credentials file (default is $HOME/.autovpn/openvpn.creds)")
+	startCmd.PersistentFlags().StringP("creds", "c", "/etc/autovpn/openvpn.creds", "Openvpn credentials file (default is $HOME/.autovpn/openvpn.creds)")
+	startCmd.PersistentFlags().StringP("vpns", "v", "/etc/autovpn/confs", "Openvpn credentials file (default is $HOME/.autovpn/openvpn.creds)")
 }
 
 // StdoutLogger represents the stdout logger callback

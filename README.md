@@ -36,3 +36,18 @@ mysuperpassword
 
 1 directory, 5 files
 ```
+
+## Execution
+
+**Note:** VPN tunnels require root permissions
+
+```
+make start
+
+//or
+
+cd autobuild && sudo ./autovpn
+```
+
+
+

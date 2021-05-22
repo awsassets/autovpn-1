@@ -8,12 +8,17 @@ LDFLAGS=-ldflags "-X=main.Version=$(VERSION)"
 ## Init: Create Autovpn config files $HOME/autovpn
 init:
 	@echo "  >  Creating autovpn config file"
-	mkdir -p $(HOME)/.autovpn/confs
+	sudo mkdir -p /etc/autovpn/confs
 
 ## build: Complie Golang files
 build: 
 	@echo "  >  Building binary..."
-	cd cmd && go build $(LDFLAGS) -o $(PROJECTNAME)
+	cd $(PROJECTNAME) && go build $(LDFLAGS) -o $(PROJECTNAME)
+
+## start: Start Autovpn
+start: 
+	@echo "  >  Starting autovpn..."
+	cd $(PROJECTNAME) && sudo ./$(PROJECTNAME) start
 
 .PHONY: help
 all: help
