@@ -20,6 +20,11 @@ start:
 	@echo "  >  Starting autovpn..."
 	cd $(PROJECTNAME) && sudo ./$(PROJECTNAME) start
 
+## start: Start Autovpn
+stats:
+	@echo "  >  Print autovpn connections stats..."
+	cd $(PROJECTNAME) && sudo ./$(PROJECTNAME) stats
+
 .PHONY: help
 all: help
 help: Makefile
