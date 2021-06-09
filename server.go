@@ -15,7 +15,11 @@ func StartSocket(sockAddr string) error {
 	if err != nil {
 		log.Fatal("listen error:", err)
 	}
-	defer l.Close()
+	defer func() {
+		if err := l.Close(); err != nil {
+			log.Fatal("listen error:", err)
+		}
+	}()
 	for {
 		// Accept new connections, dispatching them to echoServer
 		// in a goroutine.
