@@ -43,7 +43,7 @@ func pingAddress(ip string) (*ping.Statistics, error) {
 	if err != nil {
 		return nil, err
 	}
-	pinger.Count = 3
+	pinger.Count = 5
 	err = pinger.Run() // Blocks until finished.
 	if err != nil {
 		return nil, err

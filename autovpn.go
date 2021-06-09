@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"math/rand"
+	"sync"
 	"time"
 
 	"github.com/mysteriumnetwork/go-openvpn/openvpn3"
@@ -15,19 +16,25 @@ func Statistics(configDir string) error {
 	if err != nil {
 		return err
 	}
+	var wg sync.WaitGroup
 	for _, file := range files {
-		addr, err := getRemoteAddress(file)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		stats, err := pingAddress(addr)
-		if err != nil {
-			fmt.Println(err)
-			continue
-		}
-		fmt.Printf("ConnFile: %s, Addr: %s, Average RTT: %v\n", file, addr, stats.AvgRtt)
+		wg.Add(1)
+		go func(fileName string) {
+			defer wg.Done()
+			addr, err := getRemoteAddress(fileName)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			stats, err := pingAddress(addr)
+			if err != nil {
+				fmt.Println(err)
+				return
+			}
+			fmt.Printf("ConnFile: %s, Addr: %s, Average RTT: %v\n", fileName, addr, stats.AvgRtt)
+		}(file)
 	}
+	wg.Wait()
 	return nil
 }
 
